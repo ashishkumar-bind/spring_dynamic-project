@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
 	
 	@RequestMapping("/")
-	@ResponseBody
 	public String greet() {
-		return "Welcome to the Spring project";
+		return "welcome";
 	}
 
 	@RequestMapping("/movies")
