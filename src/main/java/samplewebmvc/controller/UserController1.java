@@ -10,7 +10,7 @@ public class UserController1 {
 
 	@RequestMapping("/")
 	public String greet() {
-		System.out.println("UserController1.greet()");
+		System.out.println("UserController.greet()");
 		return "footwear";
 
 	}

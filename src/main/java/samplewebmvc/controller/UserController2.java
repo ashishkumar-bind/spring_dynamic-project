@@ -1,4 +1,3 @@
-
 package samplewebmvc.controller;
 
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,7 @@ public class UserController2 {
 
 	@RequestMapping("/")
 	public String greet() {
-		System.out.println("UserController2.greet()");
+		System.out.println("UserController.greet()");
 		return "kitchen";
 
 	}
