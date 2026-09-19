@@ -5,7 +5,7 @@
 <head>
 <title>Demo for dynamic project</title>
 </head>
-<body>
-<h1>Welcome to the Spring Dynamic Project</h1>
+<body bg"green">
+<h1>Hello User This is your welcome web Page</h1>
 </body>
 </html>

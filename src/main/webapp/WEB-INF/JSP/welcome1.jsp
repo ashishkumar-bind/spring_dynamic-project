@@ -5,7 +5,7 @@
 <head>
 <title>Demo for dynamic project</title>
 </head>
-<body>
-<h1>Welcome to the Hotstar</h1>
+<body bgcolor="green">
+<h1>Hello User This is your HOTSTAR Movie web Page</h1>
 </body>
 </html>
