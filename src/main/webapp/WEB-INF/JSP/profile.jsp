@@ -9,7 +9,9 @@
 <body bgcolor="green">
 
 
-	<h1>Hello User This is your FOOTWEAR web Page</h1>
+	<h1>Hello User This is your welcome Page</h1>
+	<h2>Hello User This is your username: ${username} </h2>
+	<h2>Hello User This is your password: ${password} </h2>
 
 
 </body>

@@ -1,28 +1,57 @@
 package samplewebmvc.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/electronics")
 public class UserController {
 
-	@RequestMapping("/")
-	public String greet() {
-		System.out.println("UserController.greet()");
+//	@RequestParam Can read Query Parameter
+	@GetMapping("/")
+	public String greet(@RequestParam(name = "user", defaultValue = "GuestUser") String user, Model model) {
+		System.out.println("UserController.greet : "+user);
+
+		
+		model.addAttribute("user", user);
+		
+		return "welcome1";
+
+	}
+	
+	
+	@GetMapping("/login")
+	public String login() {
+		System.out.println("UserController.login()");
+		return "login";
+
+	}
+	
+	
+	
+	@GetMapping("/path/{id}")
+	public String pathVariablle(@PathVariable(name = "id") int id) {
+		System.out.println("UserController.pathVariablle : "+id);
 		return "welcome";
+	}
+	
+	
+	@PostMapping("/login")
+	public String userLogin(@RequestParam(name = "username") String username,@RequestParam(name = "password") String password,Model model) {
+		
+		System.out.println("UserController.userLogin : "+username);
+		System.out.println("UserController.userLogin : "+password);
+		
+		model.addAttribute("username", username);
+		model.addAttribute("password", password);
+		
+		return "profile";
 
 	}
-
-//	/WEB-INF/JSP/welcome.jsp
-
-//	@RequestMapping(value =  "/movies" ,method = RequestMethod.GET)
-	@GetMapping(value = { "/movies", "/films" })
-	public String movie() {
-		System.out.println("UserController.movie()");
-		return "movies";
-
-	}
-
+	
+	
+	
 }
