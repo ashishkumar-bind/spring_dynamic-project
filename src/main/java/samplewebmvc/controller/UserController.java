@@ -27,7 +27,7 @@ public class UserController {
 	public String greet() {
 		System.out.println("UserController.greet : ");
 		
-		return "welcome";
+		return "welcome1";
 
 	}
 	

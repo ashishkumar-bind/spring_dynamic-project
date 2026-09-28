@@ -4,23 +4,26 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate5.HibernateTemplate;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import jakarta.persistence.EntityManagerFactory;
+
 @EnableWebMvc
-@ComponentScan(basePackages = "sample.webmvc")
+@ComponentScan(basePackages = "samplewebmvc")
 @EnableTransactionManagement
 @Configuration
 public class SpringConfig implements WebMvcConfigurer {
@@ -36,38 +39,34 @@ public class SpringConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public LocalSessionFactoryBean sessionFactory() {
-		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan("sample.webmvc.entity");
-		Properties hibernateProperties = new Properties();
-		hibernateProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
-		hibernateProperties.put("hibernate.show_sql", "true");
-		hibernateProperties.put("hibernate.hbm2ddl.auto", "update");
-		sessionFactory.setHibernateProperties(hibernateProperties);
-		return sessionFactory;
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+		emf.setDataSource(dataSource);
+		emf.setPackagesToScan("samplewebmvc.entity");
+		emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+
+		Properties props = new Properties();
+		props.put("hibernate.show_sql", "true");
+		props.put("hibernate.hbm2ddl.auto", "update");
+		emf.setJpaProperties(props);
+		return emf;
 	}
 
 	@Bean
-	public HibernateTemplate hibernateTemplate(SessionFactory sessionFactory) {
-		return new HibernateTemplate(sessionFactory);
-	}
-
-	@Bean
-	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
-		return new HibernateTransactionManager(sessionFactory);
+	public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
+		return new JpaTransactionManager(emf);
 	}
 
 	@Bean
 	public ViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-// It specifies that JSTL views should be used.
-//JstlView is a class provided by the Spring framework that is specifically designed to handle JSP pages using JSTL.
+		// JstlView JSP pages ko JSTL ke saath handle karta hai
 		viewResolver.setViewClass(JstlView.class);
 		viewResolver.setPrefix("/WEB-INF/JSP/");
 		viewResolver.setSuffix(".jsp");
-
 		return viewResolver;
 	}
 
+	// CSS/JS files ke liye (webapp/css, webapp/js)
+	
 }

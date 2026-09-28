@@ -1,27 +1,19 @@
 package samplewebmvc.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
-import jakarta.transaction.Transactional;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import samplewebmvc.entity.User;
 
 @Repository
 public class UserDao {
 
-	@Autowired
-	 HibernateTemplate hibernateTemplate;
-	
+	@PersistenceContext
+	private EntityManager em;
 
-	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-		this.hibernateTemplate = hibernateTemplate;
-	}
-
-	@Transactional
 	public void saveUser(User user) {
-		hibernateTemplate.save(user);
+		em.persist(user);
 		System.out.println("UserDao.saveUser()");
 	}
-
 }
