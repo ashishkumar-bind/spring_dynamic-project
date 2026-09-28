@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Sign Up</title>
 
     <style>
         body {
@@ -13,13 +13,13 @@
             background-color: #f2f2f2;
         }
 
-        .login-container {
-            width: 350px;
-            margin: 100px auto;
+        .signup-form {
+            width: 400px;
+            margin: 50px auto;
             padding: 25px;
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 0 10px #aaa;
+            box-shadow: 0 0 10px gray;
         }
 
         h2 {
@@ -29,25 +29,30 @@
         label {
             display: block;
             margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
         input[type="text"],
-        input[type="password"] {
+        textarea {
             width: 100%;
-            padding: 10px;
-            margin-top: 5px;
+            padding: 8px;
             box-sizing: border-box;
+        }
+
+        .gender {
+            margin-top: 8px;
         }
 
         input[type="submit"] {
             width: 100%;
-            padding: 10px;
             margin-top: 20px;
+            padding: 10px;
             background-color: #007bff;
             color: white;
             border: none;
-            cursor: pointer;
             border-radius: 4px;
+            cursor: pointer;
         }
 
         input[type="submit"]:hover {
@@ -58,29 +63,58 @@
 
 <body>
 
-<div class="login-container">
+    <div class="signup-form">
 
-    <h2>Login</h2>
+        <h2>Sign Up</h2>
 
-    <form action="${pageContext.request.contextPath}/login" method="post">
+<form action="${pageContext.request.contextPath}/sign-up"
+          method="post">
+            <!-- Name -->
+            <label for="name">Name:</label>
+            <input type="text"
+                   id="name"
+                   name="name"
+                   placeholder="Enter your name"
+                   required>
 
-        <label for="username">Username:</label>
-        <input type="text"
-               id="username"
-               name="username"
-               required>
+            <!-- Gender -->
+            <label>Gender:</label>
 
-        <label for="password">Password:</label>
-        <input type="password"
-               id="password"
-               name="password"
-               required>
+            <div class="gender">
+                <input type="radio"
+                       id="male"
+                       name="gender"
+                       value="Male"
+                       required>
+                <label for="male">Male</label>
 
-        <input type="submit" value="Login">
+                <input type="radio"
+                       id="female"
+                       name="gender"
+                       value="Female">
+                <label for="female">Female</label>
 
-    </form>
+                <input type="radio"
+                       id="other"
+                       name="gender"
+                       value="Other">
+                <label for="other">Other</label>
+            </div>
 
-</div>
+            <!-- Address -->
+            <label for="address">Address:</label>
+            <textarea id="address"
+                      name="address"
+                      rows="4"
+                      placeholder="Enter your address"
+                      required></textarea>
+
+            <!-- Submit -->
+            <input type="submit" value="Sign Up">
+
+        </form>
+
+    </div>
 
 </body>
 </html>
