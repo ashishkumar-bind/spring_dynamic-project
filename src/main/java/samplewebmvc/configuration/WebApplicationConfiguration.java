@@ -8,6 +8,7 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRegistration;
 
+
 public class WebApplicationConfiguration implements WebApplicationInitializer {
 	@Override
 	public void onStartup(ServletContext ctx) throws ServletException {

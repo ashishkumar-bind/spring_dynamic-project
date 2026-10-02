@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import samplewebmvc.dao.UserDao;
 import samplewebmvc.entity.User;
 
-
 @Service
+
 public class UserService {
 	
 	@Autowired
@@ -17,8 +17,9 @@ public class UserService {
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
-	
-	@Transactional(readOnly = false)
+
+
+	@Transactional
 	public void saveUser(User user) {
 		userDao.saveUser(user);
 	}
