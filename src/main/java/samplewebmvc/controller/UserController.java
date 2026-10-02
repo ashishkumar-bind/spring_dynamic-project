@@ -1,24 +1,90 @@
 package samplewebmvc.controller;
-import org.springframework.stereotype.Controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import samplewebmvc.entity.User;
+import samplewebmvc.service.UserService;
 
 @Controller
-@RequestMapping("/")
 public class UserController {
+
+	@Autowired
+	 UserService userService;
 	
-	@RequestMapping("/")
-	public String greet() {
-		System.out.println("UserController.greet()");	
-		return "welcome";
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 
-	
-	
-	@RequestMapping("/movies")
-	@ResponseBody
-	public String movies() {
-		return "Hello, Welcome in the Movie Pannel ";
+
+	@GetMapping("/")
+	public String greet() {
+		System.out.println("UserController.greet : ");
+		
+		return "welcome1";
+
 	}
+	
+	
+	@GetMapping("/login")
+	public String login() {
+		System.out.println("UserController.login()");
+		return "login";
+
+	}
+	
+	
+	
+	@GetMapping("/path/{id}")
+	public String pathVariablle(@PathVariable(name = "id") int id) {
+		System.out.println("UserController.pathVariablle : "+id);
+		return "welcome";
+	}
+	
+	@GetMapping("/sign-up")
+	public String signUp() {
+		System.out.println("UserController.login()");
+		return "signup";
+
+	}
+	
+	
+	@PostMapping("/sign-up")
+	public String saveUser(@RequestParam(name = "name") String name,@RequestParam(name = "gender") String gender,@RequestParam(name = "address") String address,Model model) {
+		
+		System.out.println("UserController.userLogin : "+name);
+		System.out.println("UserController.userLogin : "+gender);
+		
+		User user = new User(name, gender, address) ;
+		
+		userService.saveUser(user);
+		
+		model.addAttribute("user", user);
+		
+		return "success";
+
+	}
+	
+	
+	@PostMapping("/login")
+	public String userLogin(@RequestParam(name = "username") String username,@RequestParam(name = "password") String password,Model model) {
+		
+		System.out.println("UserController.userLogin : "+username);
+		System.out.println("UserController.userLogin : "+password);
+		
+		model.addAttribute("username", username);
+		model.addAttribute("password", password);
+		
+		return "profile";
+
+	}
+	
+	
+	
 }
